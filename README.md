@@ -22,10 +22,20 @@ Or install it yourself as:
 
 ## Usage
 
-```ruby
+### Authentication
 
+```ruby
 c = Icloud::Client.new
 c.authorize(APPLEID, PASSWORD)
+```
+
+If the Apple ID/Password combo is bad, an `Icloud::Client::UnauthorizedError`
+will be raised.
+
+
+### Backup info
+
+```ruby
 udid = c.backup_devices.content.udids.first
 last_backup = c.backup_device(udid).content.backup.sort {|a,b| b.timestamp2 <=> a.timestamp2 }.first
 backup_id = last_backup.index

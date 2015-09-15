@@ -1,9 +1,12 @@
 require 'httpclient'
 require 'tmpdir'
 require 'securerandom'
+require 'pry'
 
 module Icloud
   class Client
+    UnauthorizedError = Class.new(StandardError)
+
     attr_reader :tokens, :account_info, :account_settings, :uris, :tokens, :client_id, :features
 
     def initialize
@@ -39,6 +42,7 @@ module Icloud
       end
       @client.save_cookie_store
       response = request.response.new(res, request)
+      raise UnauthorizedError if response.status == 401
       response.process self
       response
     end
