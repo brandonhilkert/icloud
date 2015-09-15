@@ -24,14 +24,11 @@ Or install it yourself as:
 
 ```ruby
 
-c = RubyiCloud::Client.new
+c = Icloud::Client.new
 c.authorize(APPLEID, PASSWORD)
 udid = c.backup_devices.content.udids.first
 last_backup = c.backup_device(udid).content.backup.sort {|a,b| b.timestamp2 <=> a.timestamp2 }.first
 backup_id = last_backup.index
-files = c.backup_files(udid, backup_id)
-sms_db = files.content.find { |f| f.path.include?("sms.db") }
-c.get_file(udid, backup_id, Array(sms_db))
 ```
 
 ## Development
