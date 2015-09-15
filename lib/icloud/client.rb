@@ -1,7 +1,5 @@
 require 'httpclient'
-require 'tmpdir'
 require 'securerandom'
-require 'pry'
 
 module Icloud
   class Client
@@ -12,9 +10,6 @@ module Icloud
     def initialize
       @client = HTTPClient.new
       @client.proxy = 'http://localhost:8080' if $DEBUG
-      dir = Dir.mktmpdir
-      @client.set_cookie_store("#{dir}/cookies.bin")
-      puts "Storing cookies in #{dir}/cookies.bin" if $DEBUG
       @client.debug_dev = STDERR if $DEBUG
       @client.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE # TODO: Fix this
       @client_id = SecureRandom.uuid
@@ -40,7 +35,7 @@ module Icloud
       else
         fail NotImplementedError
       end
-      @client.save_cookie_store
+
       response = request.response.new(res, request)
       raise UnauthorizedError if response.status == 401
       response.process self
