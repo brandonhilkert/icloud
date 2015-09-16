@@ -67,5 +67,13 @@ module Icloud
     def backup_device(udid)
       process BackupDeviceRequest.new(udid)
     end
+
+    def udids
+      backup_devices.content.udids
+    end
+
+    def latest_backup(udid)
+      backup_device(udid).content.backup.sort {|a,b| b.timestamp2 <=> a.timestamp2 }.first
+    end
   end
 end

@@ -36,8 +36,8 @@ will be raised.
 ### Backup info
 
 ```ruby
-udid = c.backup_devices.content.udids.first
-last_backup = c.backup_device(udid).content.backup.sort {|a,b| b.timestamp2 <=> a.timestamp2 }.first
+udids = c.udids
+last_backup = c.latest_backup(udids.first)
 backup_id = last_backup.index
 ```
 
