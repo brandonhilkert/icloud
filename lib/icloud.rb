@@ -24,5 +24,4 @@ require 'icloud/requests/backup/backup_devices_request.rb'
 require 'icloud/requests/backup/backup_device_request.rb'
 
 module Icloud
-  # Your code goes here...
 end
